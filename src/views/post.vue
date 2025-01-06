@@ -1,11 +1,36 @@
 <template>
-
+    <h3>Posts</h3>
+    <template v-for="post in postList">
+        <PostCard :post="post" />
+    </template>
 </template>
 
 <script setup lang="ts">
+    import { ref, onMounted } from 'vue';
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
+    import PostCard from "../components/postCard.vue"
 
+    const postList = ref(); 
+    async function getAllPublishedPosts() {
+        await fetch('https://top-blog-api-production.up.railway.app/post/public/publishedPosts/', {
+                mode: 'cors',
+                method: 'GET', 
+                headers: { 'Content-Type': 'application/json'},
+            }).then(async response => {
+                if (!response.ok)
+                {  
+                    console.log("ERROR: Tags - ",response)
+                    return new Error(`Error ${response}`)
+                } else { 
+                    let data = await response.json(); 
+                    postList.value = data.data; 
+                    console.log(postList.value);
+                }
+            }).catch( err => {
+                console.error(err); 
+            })
+    }
     
     const route = useRoute();
 
@@ -32,5 +57,9 @@
       })
             }
         ]
+    })
+
+    onMounted(async () => {
+        await getAllPublishedPosts(); 
     })
 </script>
