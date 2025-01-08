@@ -13,7 +13,7 @@
 
     const postList = ref(); 
     async function getAllPublishedPosts() {
-        await fetch('https://top-blog-api-production.up.railway.app/post/public/publishedPosts/', {
+        await fetch('https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/', {
                 mode: 'cors',
                 method: 'GET', 
                 headers: { 'Content-Type': 'application/json'},
