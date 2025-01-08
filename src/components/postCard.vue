@@ -1,10 +1,12 @@
 <template>
-    <RouterLink :to="`/post/${props.post.slug}`">
+    <RouterLink :to="`/post/${props.post.slugCombined}`">
         <div class="card">
             <div class="card-header">{{ props.post.title }}</div>
             <!-- <div class="card-body">
                 
             </div> -->
+
+            
         </div>
     </RouterLink>
 </template>
