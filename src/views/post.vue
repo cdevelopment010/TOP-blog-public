@@ -1,8 +1,16 @@
 <template>
-    <h3>Posts</h3>
-    <template v-for="post in postList">
-        <PostCard :post="post" />
-    </template>
+    <div class="container">
+        <div class="container-nav">
+            <NavComponent />
+        </div>
+
+        <div class="container-body">
+            <h3>Posts</h3>
+            <template v-for="post in postList">
+                <PostCard :post="post" />
+            </template>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -10,6 +18,7 @@
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
     import PostCard from "../components/postCard.vue"
+    import NavComponent from '../components/nav.vue';
 
     const postList = ref(); 
     async function getAllPublishedPosts() {
@@ -35,7 +44,7 @@
     const route = useRoute();
 
     useHead({
-        title: "Post-", //change to dynamic post name
+        title: "Post | CSC ", //change to dynamic post name
         meta: [
             {}
         ], 

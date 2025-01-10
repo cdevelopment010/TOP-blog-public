@@ -1,18 +1,28 @@
 <template>
-    <div class="d-flex">
+    <nav class="d-flex">
         <div>
-            <h2>Coffee Shop Coding</h2>
+            <RouterLink to="/" class="link-none"><h2>Coffee Shop Coding</h2></RouterLink>
         </div>
 
-        <div>
-            <RouterLink to="/posts" class="me-2">Posts</RouterLink>
-            <RouterLink to="/tags">Tags</RouterLink>
+        <div class="d-flex justify-evenly align-center gap-1">
+            <RouterLink to="/posts" class="btn">Posts</RouterLink>
+            <RouterLink to="/tags" class="btn">Tags</RouterLink>
+            <RouterLink to="/about" class="btn btn-secondary">About</RouterLink>
         </div>
 
-    </div>
+    </nav>
 
 </template>
 
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
 </script>
+
+<style scoped>
+    nav { 
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+    }
+
+</style>

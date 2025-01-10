@@ -1,22 +1,28 @@
 <template>
-    <NavComponent />
-    
     <div class="container">
-        Top 5 posts here in a grid fashion  
-        <p>Post 1 will span full width</p>
-        <p>-- P1 P1 --</p>
-        <p>-- P2 P3 --</p>
-        <p>-- P4 P5 --</p>
-    </div>
+        <div class="container-nav">
+            <NavComponent />
 
-    <template v-for="post in postList">
-        <div>{{ post.title }}</div>
-    </template>
+        </div>
+        <div class="container-body d-grid-80-20">
+            <!-- posts -->
+            <section class="recent-posts">
+                <template v-for="(post, index) in postList">
+                    <PostCard :post="post" :class="{'grid-full-row': index == 0 }"/>
+                </template>
+            </section>
+            <!-- sidebar -->
+            <aside>
+                Some sidebar content here...
+            </aside>
+        </div>
+    </div>  
 </template>
 
 <script setup lang="ts">
     import { ref, onMounted } from "vue"; 
     import NavComponent from '../components/nav.vue'
+    import PostCard from "../components/postCard.vue";
 
     const postList = ref(); 
 
@@ -44,3 +50,24 @@
         await getAllRecentPublishedPosts(5);
     } )
 </script>
+
+<style scoped>
+
+.d-grid-80-20 {
+    display: grid;
+    grid-template-columns: 80fr 20fr;
+    gap: 3rem;
+}
+.recent-posts { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.grid-full-row { 
+    /* grid-column-start: 1; 
+    grid-column-end: -1; */
+    grid-column: 1 / -1;
+}
+
+</style>
