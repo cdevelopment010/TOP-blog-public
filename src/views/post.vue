@@ -6,7 +6,7 @@
 
         <div class="container-body">
             <h3>Posts</h3>
-            <template v-for="(el, index) in content" :key="el.id">
+            <template v-for="(el) in content" :key="el.id">
                 <div v-html="el.html" role="document"
                     style="white-space: pre-wrap;min-width: 1px;">
                 </div>
