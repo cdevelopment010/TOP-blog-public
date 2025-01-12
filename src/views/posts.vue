@@ -6,40 +6,23 @@
 
         <div class="container-body">
             <h3>Posts</h3>
-            <template v-for="(el, index) in content" :key="el.id">
-                <div v-html="el.html" role="document"
-                    style="white-space: pre-wrap;min-width: 1px;">
-                </div>
+            <template v-for="post in postList">
+                <PostCard :post="post" />
             </template>
         </div>
     </div>
-
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted, computed } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
+    import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
 
-    interface element {
-        id: number,
-        html: string,
-        children: element[],
-        attributes: string,
-        editing: boolean,
-        hover: boolean
-    }
-
-    const route = useRoute(); 
-    const post = ref(); 
-    const title = computed(() => post.value?.title || '');
-    console.log("title", title.value);
-    const content = ref<element[]>([]); 
-
-
-    async function getPost() {
-        await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/${route.params.slug}`, {
+    const postList = ref(); 
+    async function getAllPublishedPosts() {
+        await fetch('https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/', {
                 mode: 'cors',
                 method: 'GET', 
                 headers: { 'Content-Type': 'application/json'},
@@ -50,18 +33,18 @@
                     return new Error(`Error ${response}`)
                 } else { 
                     let data = await response.json(); 
-                    post.value = data.data[0]; 
-                    console.log(post.value);
-                    content.value = JSON.parse(post.value.content); 
-                    console.log(content.value);
+                    postList.value = data.data; 
+                    console.log(postList.value);
                 }
             }).catch( err => {
                 console.error(err); 
             })
     }
+    
+    const route = useRoute();
 
     useHead({
-        title: `${title.value}`, //change to dynamic post name
+        title: "Post | CSC ", //change to dynamic post name
         meta: [
             {}
         ], 
@@ -86,6 +69,6 @@
     })
 
     onMounted(async () => {
-        await getPost(); 
+        await getAllPublishedPosts(); 
     })
 </script>
