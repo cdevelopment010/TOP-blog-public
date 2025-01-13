@@ -11,6 +11,8 @@
                     style="white-space: pre-wrap;min-width: 1px;">
                 </div>
             </template>
+
+            <Comments :post-id="postId" />
         </div>
     </div>
 
@@ -21,6 +23,7 @@
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
     import NavComponent from '../components/nav.vue';
+    import Comments from '../components/comments.vue';
 
     interface element {
         id: number,
@@ -33,8 +36,8 @@
 
     const route = useRoute(); 
     const post = ref(); 
+    const postId = ref<number>(-1); 
     const title = computed(() => post.value?.title || '');
-    console.log("title", title.value);
     const content = ref<element[]>([]); 
 
 
@@ -51,9 +54,8 @@
                 } else { 
                     let data = await response.json(); 
                     post.value = data.data[0]; 
-                    console.log(post.value);
+                    postId.value = data.data[0].id;
                     content.value = JSON.parse(post.value.content); 
-                    console.log(content.value);
                 }
             }).catch( err => {
                 console.error(err); 
