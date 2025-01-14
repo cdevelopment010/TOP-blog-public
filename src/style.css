@@ -59,7 +59,9 @@ div:has(> img:only-child) {
 }
 
 .d-flex { display: flex;}
+.flex-column { flex-direction: column;}
 .justify-evenly {justify-content: space-evenly;}
+.justify-between {justify-content: space-between;}
 .align-center {align-items: center;}
 
 .gap-1 { gap: 1rem;}
@@ -76,6 +78,7 @@ div:has(> img:only-child) {
   transition: all 0.5s ease-in-out;
   text-align: center;
   min-width: 50px;
+  max-width: max-content;
   outline: none;
   border: 2px solid transparent; 
 }

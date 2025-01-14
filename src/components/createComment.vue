@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex">
+    <div class="d-flex flex-column gap-1">
         <textarea v-model="newComment.comment" placeholder="Comment..."></textarea>
         <button @click="createComment" class="btn">Add Comment</button>
     </div>

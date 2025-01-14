@@ -4,7 +4,15 @@
         <strong>There are no comments. :( </strong>
     </div>
     <div v-for="c in comments" :key="c?.id">
-        {{ c?.comment }}
+        <div class="comment-container" v-if="c?.id">
+            <div class="comment-header d-flex justify-between">
+                <span><strong>Anon</strong></span>
+                <span>{{new Date(c.createdAt).toLocaleDateString()}}</span>
+            </div>
+            <div class="comment-comment">
+                {{ c.comment }}
+            </div>
+        </div>
     </div>
     <CreateComment :post-id="postId" @create-comment="createComment"/>
 
@@ -43,9 +51,9 @@ const getPostComments = async () => {
                     return new Error(`Error ${response}`)
                 } else { 
                     let data = await response.json(); 
-                    comments.value = data.data[0]; 
+                    comments.value = data.data; 
                     // content.value = JSON.parse(post.value.content); 
-                    // console.log(content.value);
+                    // console.log("comments:",comments.value);
                 }
             }).catch( err => {
                 console.error(err); 
@@ -53,7 +61,27 @@ const getPostComments = async () => {
 }
 
 async function createComment(newComment: Comment) { 
-    console.log(newComment)
+    if (!newComment) {
+        return; 
+    }
+    await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/${props.postId}/Comments/`, {
+                mode: 'cors',
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({newComment: newComment})
+            }).then(async response => {
+                if (!response.ok)
+                {  
+                    console.log("ERROR: Tags - ",response)
+                    return new Error(`Error ${response}`)
+                } else { 
+                    let data = await response.json(); 
+                    comments.value = data.data[0]; 
+                    await getPostComments(); 
+                }
+            }).catch( err => {
+                console.error(err); 
+            })
 }
 
 onMounted(async () => {
@@ -61,3 +89,18 @@ onMounted(async () => {
 })
 
 </script>
+
+<style scoped>
+
+.comment-container { 
+    min-width: 200px; 
+    width: 100%; 
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--text-2);
+    padding-bottom: 0.5rem;
+}
+
+.comment-header { 
+    margin-bottom: 0.5rem;
+}
+</style>
