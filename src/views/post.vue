@@ -4,7 +4,7 @@
             <NavComponent />
         </div>
 
-        <div class="container-body">
+        <div class="container-body w-80ch">
             <template v-for="(el) in content" :key="el.id">
                 <div v-html="el.html" role="document"
                     style="white-space: pre-wrap;min-width: 1px;">

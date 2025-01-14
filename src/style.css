@@ -51,8 +51,10 @@ div:has(> img:only-child) {
 .container-body { 
   margin-top: 2rem;
   margin-inline:auto;
-  width: min(80vw,80ch); 
+  width: 80vw; 
 }
+
+.w-80ch { width: 80ch;}
 
 .card {
   padding: 2em;
