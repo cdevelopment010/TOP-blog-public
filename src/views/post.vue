@@ -33,14 +33,17 @@
         hover: boolean
     }
 
+    const loading = ref<boolean>(true);
     const route = useRoute(); 
     const post = ref(); 
     const postId = ref<number>(-1); 
     const title = computed(() => post.value?.title || '');
     const content = ref<element[]>([]); 
+    const tags = ref<{id: number, name: string}[]>([])
 
 
     async function getPost() {
+        loading.value = true;
         await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/${route.params.slug}`, {
                 mode: 'cors',
                 method: 'GET', 
@@ -55,6 +58,28 @@
                     post.value = data.data[0]; 
                     postId.value = data.data[0].id;
                     content.value = JSON.parse(post.value.content); 
+                }
+            }).catch( err => {
+                console.error(err); 
+            })
+    }
+
+    async function getPostTags() {
+        loading.value = true;
+        // await fetch(`http://localhost:3000/post/${postId.value}/tags`, {
+        await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/${postId.value}/tags`, {
+                mode: 'cors',
+                method: 'GET', 
+                headers: { 'Content-Type': 'application/json'},
+            }).then(async response => {
+                if (!response.ok)
+                {  
+                    console.log("ERROR: Tags - ",response)
+                    return new Error(`Error ${response}`)
+                } else { 
+                    let data = await response.json(); 
+                    tags.value = data.data.tags;
+                    createTagsPill(); 
                 }
             }).catch( err => {
                 console.error(err); 
@@ -86,7 +111,21 @@
         ]
     })
 
+    function createTagsPill() {
+        const tagContainer = document.getElementById('tag-section'); 
+        if(!tagContainer) { return }
+        tagContainer.className = 'd-flex align-center gap-1 mb-2';
+        tags.value.forEach(tag =>{
+            const anchor = document.createElement('a');
+            anchor.innerText = tag.name; 
+            anchor.className = 'me-2 btn btn-sm'
+            anchor.href = `/tag/${tag.id}`;
+            tagContainer?.appendChild(anchor);
+        })
+    }
+
     onMounted(async () => {
         await getPost(); 
+        await getPostTags(); 
     })
 </script>
