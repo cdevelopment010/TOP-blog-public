@@ -10,6 +10,7 @@
                 <template v-for="(post, index) in postList">
                     <PostCard :post="post" :class="{'grid-full-row': index == 0 }"/>
                 </template>
+                <a href="/posts">See more posts...</a>
             </section>
             <!-- sidebar -->
             <aside>
