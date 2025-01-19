@@ -4,8 +4,8 @@
             <NavComponent />
         </div>
 
-        <div class="container-body">
-            <h3>Posts</h3>
+        <div class="container-body w-80ch">
+            <h2>Posts</h2>
             <template v-for="post in postList">
                 <PostCard :post="post" />
             </template>

@@ -14,7 +14,12 @@
             </section>
             <!-- sidebar -->
             <aside>
-                Some sidebar content here...
+                <h3 class="m-0 mb-2">Categories</h3>
+                <div class="d-flex flex-column gap-1">
+                    <template v-for="tag in tagList" :key="tag.id"> 
+                        <a :href="`/tags/${tag.id}`" class="link-none btn btn-secondary">{{ tag.name }} ({{ tag._count.PostTag }})</a>
+                    </template>
+                </div>
             </aside>
         </div>
     </div>  
@@ -26,6 +31,7 @@
     import PostCard from "../components/postCard.vue";
 
     const postList = ref(); 
+    const tagList = ref(); 
 
     async function getAllRecentPublishedPosts(numberOfPosts : number) {
         await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/recent/${numberOfPosts}`, {
@@ -47,8 +53,28 @@
             })
     }
 
+    async function getAllTags() { 
+        await fetch("https://top-blog-api-proud-thunder-6960.fly.dev/tag/tagPostCount", {
+            mode: 'cors',
+                    method: 'GET', 
+                    headers: { 'Content-Type': 'application/json'},
+            }).then(async response => {
+                    if (!response.ok)
+                    {  
+                        console.log("ERROR: Tags - ",response)
+                        return new Error(`Error ${response}`)
+                    } else { 
+                        let data = await response.json(); 
+                        tagList.value = data.data.splice(0,2); 
+                    }
+                }).catch( err => {
+                    console.error(err); 
+                })
+    }
+
     onMounted(async() => {
         await getAllRecentPublishedPosts(5);
+        await getAllTags()
     } )
 </script>
 
