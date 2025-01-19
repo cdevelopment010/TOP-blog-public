@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted, computed } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
     import NavComponent from '../components/nav.vue';
@@ -37,7 +37,6 @@
     const route = useRoute(); 
     const post = ref(); 
     const postId = ref<number>(-1); 
-    const title = computed(() => post.value?.title || '');
     const content = ref<element[]>([]); 
     const tags = ref<{id: number, name: string}[]>([])
 
@@ -58,6 +57,7 @@
                     post.value = data.data[0]; 
                     postId.value = data.data[0].id;
                     content.value = JSON.parse(post.value.content); 
+                    updateHead();
                 }
             }).catch( err => {
                 console.error(err); 
@@ -86,30 +86,33 @@
             })
     }
 
-    useHead({
-        title: `${title.value}`, //change to dynamic post name
-        meta: [
-            {}
-        ], 
-        script: [
-            {
-                type: 'application/ld+json',
-                children: JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "BlogPosting",
-                    "headline": "Blog Post Title",
-                    "author": "Your Name",
-                    "datePublished": "2025-01-01",
-                    "dateModified": "2025-01-01",
-                    "description": "A summary of the blog post.",
-                    "mainEntityOfPage": {
-                    "@type": "WebPage",
-                    "@id": `https://coffeeshopcoding.dev/post/${route.params.slug}`
-                    }
-      })
-            }
-        ]
-    })
+    function updateHead() {
+        useHead({
+            title: post.value?.title || 'Loading...',
+            meta: [
+                { name: 'description', content: post.value?.description || 'Default blog description' }
+            ],
+            script: [
+                {
+                    type: 'application/ld+json',
+                    key: 'schema-org-blog-post', // Ensures this script is unique
+                    children: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BlogPosting",
+                        "headline": post.value?.title || 'Default Title',
+                        "author": "Cdev010",
+                        "datePublished": post.value?.publishedAt || '2025-01-01',
+                        "dateModified": post.value?.updatedAt || '2025-01-01',
+                        "description": post.value?.description || 'A summary of the blog post.',
+                        "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": `https://coffeeshopcoding.dev/post/${route.params.slug}`
+                        }
+                    })
+                }
+            ]
+        });
+    }
 
     function createTagsPill() {
         const tagContainer = document.getElementById('tag-section'); 

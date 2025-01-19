@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
     import { ref, onMounted } from "vue"; 
+    import { useHead } from '@unhead/vue';
     import NavComponent from '../components/nav.vue'
     import PostCard from "../components/postCard.vue";
 
@@ -72,7 +73,34 @@
                 })
     }
 
+    function updateHead() {
+        useHead({
+            title: 'CoffeeShopCoding',
+            meta: [],
+            script: [
+                {
+                    type: 'application/ld+json',
+                    key: 'schema-org-blog-post', // Ensures this script is unique
+                    children: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BlogPosting",
+                        "headline": "Home Page",
+                        "author": "Cdev010",
+                        "datePublished": '2025-01-19',
+                        "dateModified":'2025-01-01',
+                        "description": "Home page of the blog coffee shop coding. It contains recent posts, popular tags",
+                        "mainEntityOfPage": {
+                            "@type": "WebPage",
+                            "@id": `https://coffeeshopcoding.dev/`
+                        }
+                    })
+                }
+            ]
+        });
+    }
+
     onMounted(async() => {
+        updateHead(); 
         await getAllRecentPublishedPosts(5);
         await getAllTags()
     } )
