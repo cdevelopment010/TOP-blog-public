@@ -14,15 +14,24 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, watch } from 'vue';
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
     import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
 
+    const route = useRoute();
     const postList = ref(); 
     async function getAllPublishedPosts() {
-        await fetch('https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/', {
+        let api = 'https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/'; 
+        const query = (route.query.query as string ?? "").trim();
+
+        if (query) { 
+            api += `search?query=${encodeURIComponent(query)}`
+        }
+
+
+        await fetch(api, {
                 mode: 'cors',
                 method: 'GET', 
                 headers: { 'Content-Type': 'application/json'},
@@ -41,7 +50,6 @@
             })
     }
     
-    const route = useRoute();
 
     useHead({
         title: "Post | CSC ", //change to dynamic post name
@@ -68,7 +76,7 @@
         ]
     })
 
-    onMounted(async () => {
-        await getAllPublishedPosts(); 
-    })
+    onMounted(getAllPublishedPosts); 
+
+    watch(() => route.query.query, getAllPublishedPosts); 
 </script>
