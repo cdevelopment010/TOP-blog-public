@@ -11,6 +11,7 @@
                 </div>
             </template>
 
+            <LikeShare :post-id="postId"/>
             <Comments :post-id="postId" />
         </div>
     </div>
@@ -23,6 +24,7 @@
     import { useRoute } from 'vue-router';
     import NavComponent from '../components/nav.vue';
     import Comments from '../components/comments.vue';
+    import LikeShare from '../components/LikeShare.vue';
 
     interface element {
         id: number,
@@ -90,7 +92,8 @@
         useHead({
             title: post.value?.title || 'Loading...',
             meta: [
-                { name: 'description', content: post.value?.description || 'Default blog description' }
+                { name: 'description', content: post.value?.description || 'Default blog description' },
+                { name: 'keywords', content: post.value?.keywords || 'blog, coding, web development' }
             ],
             script: [
                 {
