@@ -12,7 +12,7 @@ const router = createRouter({
     routes: [
         {path: '/', name: 'underdevelopment', meta: {index: false}, component: underDevelopment},
         {path: '/admin', name: 'home', meta: {index: true}, component: home},
-        {path: '/posts', name: 'posts', meta: {index: false}, component: posts},
+        {path: '/posts', name: 'posts', meta: {index: true}, component: posts},
         {path: '/tags', name: 'tags', meta: {index: false}, component: tags},
         {path: '/tags/:tagId', name: 'tags-posts', meta: {index: false}, component: postsByTags},
         {path: '/post/:slug', name: 'post', meta: {index: false}, component: post},

@@ -68,6 +68,7 @@ div:has(> img:only-child) {
 .flex-column { flex-direction: column;}
 .justify-evenly {justify-content: space-evenly;}
 .justify-between {justify-content: space-between;}
+.justify-center {justify-content: center;}
 .align-center {align-items: center;}
 
 .gap-1 { gap: 1rem;}
