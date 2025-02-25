@@ -19,7 +19,7 @@ import { computed } from 'vue';
     }
 
     const props = defineProps<Props>();
-    const dateOptions = {year: "numeric", month: "long", day: "numeric"} 
+    const dateOptions: Intl.DateTimeFormatOptions = {year: "numeric", month: "long", day: "numeric"} 
     const createdDate = computed(() => props.createdAt ? new Intl.DateTimeFormat(navigator.language, dateOptions).format( new Date(props?.createdAt)) : null)
 </script>
 
