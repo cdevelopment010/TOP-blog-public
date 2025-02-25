@@ -6,7 +6,7 @@
 
         
         <div class="container-body w-80ch">
-            <AuthorDetails />
+            <AuthorDetails :createdAt="post?.createdAt"/>
             <template v-for="(el) in content" :key="el.id">
                 <div v-html="el.html" role="document"
                     style="white-space: pre-wrap;min-width: 1px;">
@@ -60,6 +60,7 @@
                 } else { 
                     let data = await response.json(); 
                     post.value = data.data[0]; 
+                    console.log("post", post.value);
                     postId.value = data.data[0].id;
                     content.value = JSON.parse(post.value.content); 
                     updateHead();
