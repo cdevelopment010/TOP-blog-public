@@ -2,8 +2,8 @@
     <div class="d-flex m-b gap-1">
         <img src="https://res.cloudinary.com/dxcrv5gid/image/upload/v1715526765/dj8hooqrszgthdyhwpf0.jpg" alt="" class="border-50" style="background: grey;">
         <div class="d-flex flex-column"> 
-            <span>Craig</span>
-            <span>Post created: {{ createdDate }}</span>
+            <span><strong>Craig</strong></span>
+            <span>{{ createdDate }}</span>
         </div>
     </div>
 
@@ -18,8 +18,9 @@ import { computed } from 'vue';
         createdAt: string
     }
 
-    const props = defineProps<Props>(); 
-    const createdDate = computed(() => props.createdAt ? new Intl.DateTimeFormat(navigator.language).format( new Date(props?.createdAt)) : null)
+    const props = defineProps<Props>();
+    const dateOptions = {year: "numeric", month: "long", day: "numeric"} 
+    const createdDate = computed(() => props.createdAt ? new Intl.DateTimeFormat(navigator.language, dateOptions).format( new Date(props?.createdAt)) : null)
 </script>
 
 <style scoped> 
