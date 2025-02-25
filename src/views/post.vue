@@ -4,7 +4,9 @@
             <NavComponent />
         </div>
 
+        
         <div class="container-body w-80ch">
+            <AuthorDetails />
             <template v-for="(el) in content" :key="el.id">
                 <div v-html="el.html" role="document"
                     style="white-space: pre-wrap;min-width: 1px;">
@@ -25,6 +27,7 @@
     import NavComponent from '../components/nav.vue';
     import Comments from '../components/comments.vue';
     import LikeShare from '../components/LikeShare.vue';
+    import AuthorDetails from '../components/authorDetails.vue';
 
     interface element {
         id: number,
