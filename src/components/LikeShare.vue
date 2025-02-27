@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, computed, onMounted } from "vue"; 
+    import { ref, computed, onMounted, watch } from "vue"; 
 
     interface Props {
         postId : number
@@ -13,12 +13,13 @@
 
     const props = defineProps<Props>(); 
 
-    const likedPosts = ref(JSON.parse(localStorage.getItem("cdc-likedPosts")  || "[]")); 
+    const likedPosts = ref(JSON.parse(localStorage.getItem("csc-likedPosts")  || "[]")); 
+    likedPosts.value = likedPosts.value.map((id :any) => Number(id))
     const hasLiked = computed(() => likedPosts.value.includes(props.postId)); 
     const postLikeCount = ref(0); 
 
     async function likePost() {
-
+        if (!props.postId) { return }
         //liking post
         if (!hasLiked.value) { 
             likedPosts.value.push(props.postId); 
@@ -50,7 +51,6 @@
                 } else { 
                     let data = await response.json(); 
                     postLikeCount.value = data.data || 0; 
-                    console.log(postLikeCount.value);
                 }
             }).catch( err => {
                 console.error(err); 
@@ -71,16 +71,17 @@
                     return new Error(`Error ${response}`)
                 } else { 
                     let data = await response.json(); 
-                    postLikeCount.value = data.data || 0; 
-                    console.log(postLikeCount.value);
+                    postLikeCount.value = data.data.numberOfLikes || 0; 
                 }
             }).catch( err => {
                 console.error(err); 
             })
     }
 
-    onMounted(async () => {
-        await getPostLikeCount(); 
-    })
+    watch(() => props.postId, async (newVal, oldVal) => {
+        if (newVal && newVal !== oldVal) {
+            await getPostLikeCount();
+        }
+    });
 
 </script>
