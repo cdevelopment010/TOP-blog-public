@@ -1,7 +1,7 @@
 <template>
-    <RouterLink :to="`/post/${props.post.slugCombined}`" class="link-none">
+    <RouterLink :to="`/post/${props.post.slug}`" class="link-none">
         <div class="card">
-            <div class="card-header"><h3>{{ props.post.title }}</h3></div>
+            <div class="card-header"><h3>{{ props.post.slug}}</h3></div> <!-- change back to title once working again in admin site-->
             <!-- <div class="card-body">
                 
             </div> -->
@@ -18,12 +18,12 @@
 
 <script setup lang="ts">
     import { ref } from "vue";
+    // Need to get tags related to post
     const tags = ref<string[]>([
         'JS', 
         'CSS'
     ])
     const props = defineProps<{ post: any }>(); 
-    //console.log(props.post.exerpt)
 
 </script>
 

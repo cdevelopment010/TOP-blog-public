@@ -6,10 +6,58 @@
 
         
         <div class="container-body w-80ch">
-            <AuthorDetails :createdAt="post?.createdAt"/>
+            <AuthorDetails :createdAt="post?.createdAt" class="mb-3"/>
             <template v-for="(el) in content" :key="el.id">
-                <div v-html="el.html" role="document"
-                    style="white-space: pre-wrap;min-width: 1px;">
+                <h1 
+                    v-if="el.type === 'header1'" 
+                    v-html="el.content">
+                </h1>
+                <h2 
+                    v-if="el.type === 'header2'" 
+                    v-html="el.content">
+                </h2>
+                <h3
+                    v-if="el.type === 'header3'" 
+                    v-html="el.content">
+                </h3>
+                <h4 
+                    v-if="el.type === 'header4'" 
+                    v-html="el.content">
+                </h4>
+                <div
+                    v-else-if="el.type == 'tag'"
+                    v-html="el.content"
+                > 
+                </div>
+
+
+                <p 
+                    v-else-if="el.type === 'paragraph'"
+                    v-html="el.content">
+                </p>
+
+                <blockquote 
+                    v-else-if="el.type === 'quote'" 
+                    v-html="el.content"
+                    >
+                </blockquote>
+
+                <!-- <pre 
+                    v-else-if="el.type === 'code'"
+                    v-html="el.content"
+                >
+                </pre> -->
+                <a 
+                    v-else-if="el.type === 'link'" 
+                    v-html="el.content"
+                    >
+                </a>
+
+                <div 
+                    v-else-if="el.type == 'image'"
+                    class="image-container"
+                    v-html="el.content"
+                    > 
                 </div>
             </template>
 
@@ -31,11 +79,9 @@
 
     interface element {
         id: number,
-        html: string,
-        children: element[],
-        attributes: string,
-        editing: boolean,
-        hover: boolean
+        content: string,
+        type: string,
+        children?: element[]
     }
 
     const loading = ref<boolean>(true);
@@ -55,10 +101,11 @@
             }).then(async response => {
                 if (!response.ok)
                 {  
-                    console.log("ERROR: Tags - ",response)
+                    console.log("ERROR:",response)
                     return new Error(`Error ${response}`)
                 } else { 
                     let data = await response.json(); 
+                    console.log("data",data)
                     post.value = data.data[0]; 
                     console.log("post", post.value);
                     postId.value = data.data[0].id;
@@ -139,3 +186,21 @@
         await getPostTags(); 
     })
 </script>
+
+<style scoped>
+.image-container { 
+    border-radius: 5px;
+}
+::v-deep(.header-img) { 
+  max-width: 100vw;
+  width: 100%; 
+  object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 4px 4px 16px 4px rgba(var(--text-2),0.5);
+}
+
+::v-deep(mark) { 
+    color: var(--text-1);
+    background: var(--primary-2);
+}
+</style>

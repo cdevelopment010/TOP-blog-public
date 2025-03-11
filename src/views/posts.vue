@@ -58,6 +58,7 @@
                     let data = await response.json(); 
                     postList.value = data.data.data; 
                     totalPages.value = data.data.totalPages || 1;
+                    console.log("posts", postList.value); 
                 }
             }).catch( err => {
                 console.error(err); 
