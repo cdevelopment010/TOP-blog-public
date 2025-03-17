@@ -2,15 +2,20 @@
     <i class="fa-regular fa-heart" v-if="!hasLiked" @click="likePost"></i>
     <i class="fa-solid fa-heart" v-if="hasLiked" @click="likePost"></i>
     {{ postLikeCount }}
+
+    <Toasts />
 </template>
 
 <script setup lang="ts">
     import { ref, computed, watch } from "vue"; 
+    import Toasts from "./Toasts.vue";
+    import { useToast } from "../utils/useToast";
 
     interface Props {
         postId : number
     }
 
+    const { addToast } = useToast(); 
     const props = defineProps<Props>(); 
 
     const likedPosts = ref(JSON.parse(localStorage.getItem("csc-likedPosts")  || "[]")); 
@@ -72,6 +77,14 @@
                 } else { 
                     let data = await response.json(); 
                     postLikeCount.value = data.data.numberOfLikes || 0; 
+                    if (type == "add") { 
+                        addToast({ title: 'Woohoo!', message: 'You liked the post!', type: 'success', timeout: 1500})
+                    }
+
+                    if (type == "remove") { 
+                        addToast({ title: 'Oh no!', message: 'You unliked the post! :( ', type: 'danger', timeout: 1500})
+
+                    }
                 }
             }).catch( err => {
                 console.error(err); 

@@ -15,12 +15,15 @@
         </div>
     </div>
     <CreateComment :post-id="postId" @create-comment="createComment"/>
+    <Toasts /> 
 
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue"; 
 import CreateComment from "./createComment.vue";
+import { useToast } from "../utils/useToast";
+import Toasts from "./Toasts.vue";
 
 interface Comment { 
     id?: number, 
@@ -28,6 +31,8 @@ interface Comment {
     postId: number, 
     createdAt: Date
 }
+
+const { addToast } = useToast(); 
 
 // const newComment = ref<Comment | null>(null); 
 const comments = ref<(Comment | null)[]>([])
@@ -77,6 +82,7 @@ async function createComment(newComment: Comment) {
                 } else { 
                     let data = await response.json(); 
                     comments.value = data.data[0]; 
+                    addToast({ title: 'Success', message: 'Comment was created!', type: 'success', timeout: 3000})
                     await getPostComments(); 
                 }
             }).catch( err => {
