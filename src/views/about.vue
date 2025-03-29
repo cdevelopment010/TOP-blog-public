@@ -33,7 +33,32 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '@unhead/vue';
 import NavComponent from '../components/nav.vue';
+
+
+
+useHead({
+        title: "About | CSC ", //change to dynamic post name
+        meta: [
+            {}
+        ], 
+        script: [
+            {
+                type: 'application/ld+json',
+                children: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "headline": "",
+                    "author": "Craig",
+                    "description": "About page for coffeeshopcoding.dev.",
+                    "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": `https://coffeeshopcoding.dev/about/`
+                    }
+      })
+            }
+        ]
+    })
 
 
 </script>

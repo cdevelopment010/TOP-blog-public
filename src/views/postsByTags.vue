@@ -16,6 +16,7 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
+    import { useHead } from '@unhead/vue';
     import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
     
@@ -41,6 +42,32 @@
                 console.error(err); 
             })
     }
+
+    
+    useHead({
+        title: "Posts by tags | CSC ", 
+        meta: [
+            {}
+        ], 
+        script: [
+            {
+                type: 'application/ld+json',
+                children: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    "headline": "Blog Post Title",
+                    "author": "Your Name",
+                    "datePublished": "2025-01-01",
+                    "dateModified": "2025-01-01",
+                    "description": "A summary of the blog post.",
+                    "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": `https://coffeeshopcoding.dev/tags/`
+                    }
+      })
+            }
+        ]
+    })
     
     
 
