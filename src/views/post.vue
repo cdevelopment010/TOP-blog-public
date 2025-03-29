@@ -7,6 +7,7 @@
         
         <div class="container-body w-80ch">
             <AuthorDetails :createdAt="post?.createdAt" class="mb-3"/>
+            
             <template v-for="(el) in content" :key="el.id">
                 <h1 
                     v-if="el.type === 'header1'" 

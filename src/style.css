@@ -74,6 +74,7 @@ div:has(> img:only-child) {
 .justify-between {justify-content: space-between;}
 .justify-center {justify-content: center;}
 .align-center {align-items: center;}
+.align-self-center { align-self: center;}
 
 .gap-1 { gap: 1rem;}
 
@@ -90,6 +91,11 @@ div:has(> img:only-child) {
 .mb-4 { margin-bottom: 1rem;}
 .mb-5 { margin-bottom: 1.5rem;}
 
+.ms-auto {margin-left: auto}
+.me-auto {margin-right: auto}
+.m-auto {margin-inline: auto}
+
+.cursor-pointer { cursor: pointer;}
 
 /* Buttons */
 .btn { 
