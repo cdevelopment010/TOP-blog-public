@@ -40,7 +40,7 @@
                 <ul
                     v-else-if="el.type === 'list'"
                 >
-                    <template v-for="(child, index) in el.children" :key="'list-'+el.id+'-'+index">
+                    <template v-for="(child, _) in el.children" :key="'list-'+el.id+'-'+_">
                         <li>{{ child }}</li>
                     </template>
 
