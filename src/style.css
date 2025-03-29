@@ -41,6 +41,10 @@ div:has(> img:only-child) {
   color: var(--primary-1); 
 }
 
+.link-youtube:hover {color: rgb(255, 0, 51);}
+.link-twitch:hover {color:#9147ff;}
+.link-github:hover {color: #c9510c;}
+
 .container { 
   display: grid; 
   grid-template-rows: 1fr auto;
