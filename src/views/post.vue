@@ -7,7 +7,7 @@
         
         <div class="container-body w-80ch">
             <AuthorDetails :createdAt="post?.createdAt" class="mb-3"/>
-            
+
             <template v-for="(el) in content" :key="el.id">
                 <h1 
                     v-if="el.type === 'header1'" 
@@ -27,7 +27,7 @@
                 </h4>
                 <div
                     v-else-if="el.type == 'tag'"
-                    v-html="el.content"
+                    id="tag-section"
                 > 
                 </div>
 
@@ -36,6 +36,15 @@
                     v-else-if="el.type === 'paragraph'"
                     v-html="el.content">
                 </p>
+
+                <ul
+                    v-else-if="el.type === 'list'"
+                >
+                    <template v-for="(child, index) in el.children" :key="'list-'+el.id+'-'+index">
+                        <li>{{ child }}</li>
+                    </template>
+
+                </ul>
 
                 <blockquote 
                     v-else-if="el.type === 'quote'" 
@@ -171,6 +180,7 @@
 
     function createTagsPill() {
         const tagContainer = document.getElementById('tag-section'); 
+        console.log("tagContainer:",tagContainer)
         if(!tagContainer) { return }
         tagContainer.className = 'd-flex align-center gap-1 mb-2';
         tags.value.forEach(tag =>{
