@@ -1,13 +1,13 @@
 <template>
     <RouterLink :to="`/post/${props.post.slug}`" class="link-none">
         <div class="card">
-            <div class="card-header"><h3>{{ props.post.slug}}</h3></div> <!-- change back to title once working again in admin site-->
+            <div class="card-header"><h3>{{ props.post.title}}</h3></div> <!-- change back to title once working again in admin site-->
             <!-- <div class="card-body">
                 
             </div> -->
             <div class="card-tags d-flex gap-1">
                 <template v-for="tag in tags">
-                    <RouterLink :to="`/tags/${tag}`" class="btn btn-secondary link-none">{{ tag }}</RouterLink>
+                    <RouterLink :to="`/tags/${tag.id}`" class="btn btn-secondary link-none">{{ tag.name }}</RouterLink>
                 </template>
             </div>
 
@@ -17,13 +17,40 @@
 </template>
 
 <script setup lang="ts">
-    import { ref } from "vue";
+    import { ref, watch } from "vue";
     // Need to get tags related to post
-    const tags = ref<string[]>([
-        'JS', 
-        'CSS'
-    ])
+    const tags = ref<{name: string, id: number}[]>([])
     const props = defineProps<{ post: any }>(); 
+
+    const getTagsByPost = async (postId :number) => {
+        await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/${postId}/tags`, {
+                mode: 'cors',
+                method: 'GET', 
+                headers: { 'Content-Type': 'application/json'},
+            }).then(async response => {
+                if (!response.ok)
+                {  
+                    console.log("ERROR: Tags - ",response)
+                    return new Error(`Error ${response}`)
+                } else { 
+                    let data = await response.json(); 
+                    tags.value = data.data.tags; 
+                }
+            }).catch( err => {
+                console.error(err); 
+            })
+    }
+
+
+    watch(
+        () => props.post.id, 
+        async () => {
+            console.log("watch post id",props.post.id);
+            await getTagsByPost(props.post.id)
+        }, 
+        {immediate: true}
+    )
+    
 
 </script>
 
