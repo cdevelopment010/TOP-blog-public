@@ -52,11 +52,12 @@
                     >
                 </blockquote>
 
-                <!-- <pre 
-                    v-else-if="el.type === 'code'"
-                    v-html="el.content"
-                >
-                </pre> -->
+                <div v-else-if="el.type === 'code'">
+                    <pre>
+                    <code :class="`language-${el.language}`" v-html="el.content"></code>
+                    </pre>
+
+                </div>
                 <a 
                     v-else-if="el.type === 'link'" 
                     v-html="el.content"
@@ -91,7 +92,8 @@
         id: number,
         content: string,
         type: string,
-        children?: element[]
+        children?: element[],
+        language?: string
     }
 
     const loading = ref<boolean>(true);
