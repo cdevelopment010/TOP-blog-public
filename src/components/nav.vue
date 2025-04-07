@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-    import logo from "@/assets/logo.svg"
     import { RouterLink, useRouter } from 'vue-router';
     import { ref, onMounted } from "vue"; 
 
