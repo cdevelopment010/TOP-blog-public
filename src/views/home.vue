@@ -7,14 +7,16 @@
         <div class="container-body d-grid-80-20">
             <!-- posts -->
             <section class="recent-posts">
+                <h1 class="mb-2">Posts</h1>
                 <template v-for="(post, index) in postList">
                     <PostCard :post="post" :class="{'grid-full-row': index == 0 }"/>
                 </template>
                 <a href="/posts">See more posts...</a>
+                
             </section>
             <!-- sidebar -->
             <aside>
-                <h3 class="m-0 mb-2">Categories</h3>
+                <h3 class="m-0 mb-2">tags</h3>
                 <div class="d-flex flex-column gap-1">
                     <template v-for="tag in tagList" :key="tag.id"> 
                         <a :href="`/tags/${tag.id}`" class="link-none btn btn-secondary">{{ tag.name }} ({{ tag._count.PostTag }})</a>

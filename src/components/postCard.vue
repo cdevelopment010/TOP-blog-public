@@ -2,9 +2,9 @@
     <RouterLink :to="`/post/${props.post.slug}`" class="link-none">
         <div class="card">
             <div class="card-header"><h3>{{ props.post.title}}</h3></div> <!-- change back to title once working again in admin site-->
-            <!-- <div class="card-body">
-                
-            </div> -->
+            <div class="card-body mb-4">
+                <div v-html="excerpt"></div>
+            </div>
             <div class="card-tags d-flex gap-1">
                 <template v-for="tag in tags">
                     <RouterLink :to="`/tags/${tag.id}`" class="btn btn-secondary link-none">{{ tag.name }}</RouterLink>
@@ -17,10 +17,22 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, watch } from "vue";
+    import { computed, ref, watch } from "vue";
     // Need to get tags related to post
     const tags = ref<{name: string, id: number}[]>([])
     const props = defineProps<{ post: any }>(); 
+
+    const excerpt = computed(() => {
+        
+        const paragraphBlock = JSON.parse(props.post.content).find((p :any) => p.type === 'paragraph'); 
+        if (!paragraphBlock || !paragraphBlock.content) {return ""; }
+        const rawText = paragraphBlock.content  
+            .replace(/<[^>]+>/g, "")
+            .replace(/&nbsp;/g," ")
+
+        return rawText.split(" ").slice(0,20).join(" ") + "...";
+
+    })
 
     const getTagsByPost = async (postId :number) => {
         await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/${postId}/tags`, {
@@ -59,7 +71,7 @@
     padding: 1rem; 
     margin-bottom: 1rem;
     border: 1px solid var(--text-1); 
-    background: var(--background-1);
+    background: var(--background-2);
     border-radius: 12px;
 }
 
