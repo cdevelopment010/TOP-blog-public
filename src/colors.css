@@ -1,25 +1,35 @@
 :root {
-  --text-1: rgb(82, 78, 85); /* Original */
-  --text-2: rgb(122, 117, 125); /* Slightly lighter */
-  --background-1: rgb(255, 255, 255); /* Original */
-  --background-2: rgb(240, 240, 240); /* Slightly lighter */
-  --primary-1: rgb(186, 63, 248); /* Original */
-  --primary-2: rgb(206, 123, 255); /* Slightly lighter */
-  --secondary-1: rgb(219, 148, 255); /* Original */
-  --secondary-2: rgb(235, 185, 255); /* Slightly lighter */
-  --accent-1: rgb(255, 189, 66); /* Original */
-  --accent-2: rgb(255, 211, 133); /* Slightly lighter */
+  --text-1: #3b3b3b;           /* dark gray */
+  --text-2: #5c5c5c;           /* slightly lighter */
+  --background-1: #f8f6f1;     /* latte cream */
+  --background-2: #ffffff;     /* pure white for lighter contrast */
+  
+  --primary-1: #d9a066;        /* coffee caramel */
+  --primary-2: #eabf8b;        /* lighter caramel */
+  
+  --secondary-1: #a37e58;      /* brown sugar */
+  --secondary-2: #c2a68b;      /* lighter brown sugar */
+  
+  --accent-1: #007acc;         /* cool blue (links/highlights) */
+  --accent-2: #58a6ff;         /* lighter blue */
+
+  color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --text-1: rgb(174, 170, 177); /* Original */
-  --text-2: rgb(204, 200, 207); /* Slightly lighter */
-  --background-1: rgb(33, 33, 33); /* Original */
-  --background-2: rgb(66, 66, 66); /* Slightly lighter */
-  --primary-1: rgb(130, 7, 192); /* Original */
-  --primary-2: rgb(170, 67, 230); /* Slightly lighter */
-  --secondary-1: rgb(71, 0, 107); /* Original */
-  --secondary-2: rgb(111, 40, 147); /* Slightly lighter */
-  --accent-1: rgb(189, 123, 0); /* Original */
-  --accent-2: rgb(219, 153, 30); /* Slightly lighter */
+  --text-1: #f5f5f5;           /* off-white */
+  --text-2: #d0d0d0;           /* lighter off-white */
+  --background-1: #1e1e1e;     /* charcoal black */
+  --background-2: #2b2b2b;     /* slightly lighter dark */
+  
+  --primary-1: #c0a98f;        /* mocha */
+  --primary-2: #d7c3a9;        /* lighter mocha */
+  
+  --secondary-1: #6f4e37;      /* espresso brown */
+  --secondary-2: #8a6b55;      /* lighter espresso */
+  
+  --accent-1: #b58900;         /* warm gold (links/code) */
+  --accent-2: #deb900;         /* lighter warm gold */
+
+  color-scheme: dark;
 }

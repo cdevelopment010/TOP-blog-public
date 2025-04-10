@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark light;
   color: var(--text-1);
   background-color: var(--background-1);
 
@@ -156,7 +155,6 @@ div:has(> img:only-child) {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color-scheme: light dark;
     color: var(--text-1);
     background-color: var(--background-1);
   }

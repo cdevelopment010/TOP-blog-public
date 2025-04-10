@@ -24,7 +24,7 @@
             <RouterLink to="/posts" class="btn">Posts</RouterLink>
             <RouterLink to="/tags" class="btn">Tags</RouterLink>
             <RouterLink to="/about" class="btn btn-secondary">About</RouterLink>
-            <button class="btn" @click="toggleDarkMode" style="font-size:1.3rem;">
+            <button class="btn-theme-toggle" @click="toggleDarkMode" style="font-size:1.3rem;">
                 <i class="fa-solid fa-moon" v-if="darkmode == 'dark'"></i>
                 <i class="fa-solid fa-sun" v-if="darkmode == 'light'"></i>
             </button>
@@ -89,6 +89,37 @@
 
     .logo.isDark .rect { 
         fill: var(--text-1)
+    }
+
+
+    .btn-theme-toggle {
+        background-color: var(--primary-1);
+        color: var(--background-1);
+        border: none;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-theme-toggle:hover {
+        background-color: var(--primary-2);
+        transform: rotate(8deg);
+    }
+
+    .btn-theme-toggle:focus {
+    outline: none;
+    outline-offset: 2px;
+    }
+    .btn-theme-toggle:focus-visible {
+        box-shadow: 0 0 0 2px var(--accent-2);
+    }
+    .btn-theme-toggle:active {
+        transform: scale(0.95);
     }
 
 </style>
