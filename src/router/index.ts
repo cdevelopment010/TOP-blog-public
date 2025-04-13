@@ -13,10 +13,10 @@ const router = createRouter({
         // {path: '/', name: 'underdevelopment', meta: {index: false}, component: underDevelopment},
         {path: '/', name: 'home', meta: {index: true}, component: home},
         {path: '/posts', name: 'posts', meta: {index: true}, component: posts},
-        {path: '/tags', name: 'tags', meta: {index: false}, component: tags},
+        {path: '/tags', name: 'tags', meta: {index: true}, component: tags},
         {path: '/tags/:tagId', name: 'tags-posts', meta: {index: false}, component: postsByTags},
         {path: '/post/:slug', name: 'post', meta: {index: false}, component: post},
-        {path: '/about', name: 'about', meta: {index: false}, component: about},
+        {path: '/about', name: 'about', meta: {index: true}, component: about},
     ]
 }); 
 
