@@ -4,8 +4,12 @@
             <NavComponent />
         </div>
 
+        <div v-if="notFound">
+            <Error404 />
+        </div>
+
         
-        <div class="container-body w-80ch">
+        <div v-else class="container-body w-80ch">
             <AuthorDetails :createdAt="post?.createdAt" class="mb-3"/>
 
             <template v-for="(el) in content" :key="el.id">
@@ -87,6 +91,7 @@
     import Comments from '../components/comments.vue';
     import LikeShare from '../components/LikeShare.vue';
     import AuthorDetails from '../components/authorDetails.vue';
+    import Error404 from '../components/404Post.vue';
 
     interface element {
         id: number,
@@ -102,6 +107,7 @@
     const postId = ref<number>(-1); 
     const content = ref<element[]>([]); 
     const tags = ref<{id: number, name: string}[]>([])
+    const notFound = ref<boolean | null>(null);
 
 
     async function getPost() {
@@ -113,8 +119,14 @@
             }).then(async response => {
                 if (!response.ok)
                 {  
+                    notFound.value = true;
+                    // const meta = document.createElement("meta");
+                    // meta.name = "robots";
+                    // meta.content = "noindex";
+                    // document.head.appendChild(meta);
+                    updateHead();
                     console.log("ERROR:",response)
-                    return new Error(`Error ${response}`)
+                    throw new Error(`Error ${response}`)
                 } else { 
                     let data = await response.json(); 
                     console.log("data",data)
@@ -152,32 +164,43 @@
     }
 
     function updateHead() {
-        useHead({
-            title: post.value?.title || 'Loading...',
-            meta: [
-                { name: 'description', content: post.value?.description || 'Default blog description' },
-                { name: 'keywords', content: post.value?.keywords || 'blog, coding, web development' }
-            ],
-            script: [
-                {
-                    type: 'application/ld+json',
-                    key: 'schema-org-blog-post', // Ensures this script is unique
-                    children: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "BlogPosting",
-                        "headline": post.value?.title || 'Default Title',
-                        "author": "Cdev010",
-                        "datePublished": post.value?.publishedAt || '2025-01-01',
-                        "dateModified": post.value?.updatedAt || '2025-01-01',
-                        "description": post.value?.description || 'A summary of the blog post.',
-                        "mainEntityOfPage": {
-                            "@type": "WebPage",
-                            "@id": `https://coffeeshopcoding.dev/post/${route.params.slug}`
-                        }
-                    })
-                }
-            ]
-        });
+
+        if (notFound.value) {
+            useHead({
+                title: '404 - post not found', 
+                meta: [
+                    { name: 'description', content: 'This post was deleted or never existed.' },
+                    { name: 'robots', content: 'noindex' }
+                    ]
+                })
+        } else {
+            useHead({
+                title: post.value?.title || 'Loading...',
+                meta: [
+                    { name: 'description', content: post.value?.description || 'Default blog description' },
+                    { name: 'keywords', content: post.value?.keywords || 'blog, coding, web development' }
+                ],
+                script: [
+                    {
+                        type: 'application/ld+json',
+                        key: 'schema-org-blog-post', // Ensures this script is unique
+                        children: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "BlogPosting",
+                            "headline": post.value?.title || 'Default Title',
+                            "author": "Cdev010",
+                            "datePublished": post.value?.publishedAt || '2025-01-01',
+                            "dateModified": post.value?.updatedAt || '2025-01-01',
+                            "description": post.value?.description || 'A summary of the blog post.',
+                            "mainEntityOfPage": {
+                                "@type": "WebPage",
+                                "@id": `https://coffeeshopcoding.dev/post/${route.params.slug}`
+                            }
+                        })
+                    }
+                ]
+            });
+        }
     }
 
     function createTagsPill() {
@@ -196,7 +219,11 @@
 
     onMounted(async () => {
         await getPost(); 
-        await getPostTags(); 
+
+        if (!notFound.value) 
+        { 
+            await getPostTags(); 
+        }
     })
 </script>
 
