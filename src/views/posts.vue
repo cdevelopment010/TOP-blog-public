@@ -4,7 +4,11 @@
             <NavComponent />
         </div>
 
-        <div class="container-body w-80ch">
+        <div v-if="loading" class="container-body w-80ch">
+            <Loading />
+        </div>
+
+        <div v-else class="container-body w-80ch">
             <div class="d-flex align-center justify-between mb-5">
                 <h2 class="m-0">Posts</h2>
                 <div class="pagination d-flex align-center justify-center">
@@ -28,6 +32,7 @@
     import { useRoute, useRouter } from 'vue-router';
     import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
+    import Loading from '../components/loading.vue';
 
     const route = useRoute();
     const router = useRouter();
@@ -35,6 +40,7 @@
     const currentPage = ref(route.query.page ? parseInt(route.query.page as string) : 1);
     const totalPages = ref(1);
     const postsPerPage = ref(3);
+    const loading = ref<boolean>(true);
 
     async function getAllPublishedPosts() {
         let api = `https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts?page=${currentPage.value}&limit=${postsPerPage.value}`; 
@@ -59,6 +65,7 @@
                     postList.value = data.data.data; 
                     totalPages.value = data.data.totalPages || 1;
                     console.log("posts", postList.value); 
+                    loading.value = false;
                 }
             }).catch( err => {
                 console.error(err); 
@@ -110,6 +117,7 @@
     onMounted(getAllPublishedPosts); 
 
     watch(() => route.query.page, (newPage) => {
+        loading.value = true;
         currentPage.value = newPage ? parseInt(newPage as string) : 1;
         getAllPublishedPosts()
     });
