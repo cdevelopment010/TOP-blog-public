@@ -78,7 +78,12 @@
     function updateHead() {
         useHead({
             title: 'CoffeeShopCoding',
-            meta: [],
+            meta: [
+                {
+                    name: 'description',
+                    content: 'Home page of the blog Coffee Shop Coding. It contains recent posts, popular tags, and more.'
+                }
+            ],
             script: [
                 {
                     type: 'application/ld+json',
