@@ -70,7 +70,8 @@
 
                 <div 
                     v-else-if="el.type == 'image'"
-                    class="image-container"
+                    class="image-container spotlight"
+                    :data-src="extractImgSrc(el.content)"
                     v-html="el.content"
                     > 
                 </div>
@@ -84,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, nextTick } from 'vue';
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
     import NavComponent from '../components/nav.vue';
@@ -92,6 +93,9 @@
     import LikeShare from '../components/LikeShare.vue';
     import AuthorDetails from '../components/authorDetails.vue';
     import Error404 from '../components/404Post.vue';
+    // @ts-ignore
+    import Spotlight from 'spotlight.js/dist/js/spotlight.min.js'; 
+    import 'spotlight.js/dist/css/spotlight.min.css';
 
     interface element {
         id: number,
@@ -217,6 +221,26 @@
         })
     }
 
+    function extractImgSrc(html: string) : string | null {
+        const div = document.createElement("div"); 
+        div.innerHTML = html; 
+        const img = div.querySelector("img"); 
+        return img?.getAttribute("src") || null; 
+    }
+
+    function initSpotlight() {
+        const container = document.querySelector(".container-body"); 
+        if (!container) { return }
+
+        const images = container.querySelectorAll("img"); 
+        images.forEach((img: any) => {
+            img.setAttribute("data-spotlight", "");
+            img.style.cursor = "zoom-in"
+        });
+
+        // Spotlight.init();
+    }
+
     onMounted(async () => {
         await getPost(); 
 
@@ -224,6 +248,10 @@
         { 
             await getPostTags(); 
         }
+
+        nextTick(() => {
+            initSpotlight(); 
+        }); 
     })
 </script>
 
