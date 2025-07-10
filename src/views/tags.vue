@@ -53,7 +53,7 @@ async function getAllTags() {
 
 
 useHead({
-        title: "Tags | CSC ", //change to dynamic post name
+        title: "Tags", //change to dynamic post name
         meta: [
             {}
         ], 
@@ -64,7 +64,7 @@ useHead({
                     "@context": "https://schema.org",
                     "@type": "BlogPosting",
                     "headline": "Blog Post Title",
-                    "author": "Your Name",
+                    "author": "Cdev010",
                     "datePublished": "2025-01-01",
                     "dateModified": "2025-01-01",
                     "description": "A summary of the blog post.",

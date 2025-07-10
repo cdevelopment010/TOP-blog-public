@@ -39,7 +39,7 @@ import NavComponent from '../components/nav.vue';
 
 
 useHead({
-        title: "About | CSC ", //change to dynamic post name
+        title: "About", //change to dynamic post name
         meta: [
             {}
         ], 
@@ -49,7 +49,7 @@ useHead({
                 children: JSON.stringify({
                     "@context": "https://schema.org",
                     "headline": "",
-                    "author": "Craig",
+                    "author": "Cdev010",
                     "description": "About page for coffeeshopcoding.dev.",
                     "mainEntityOfPage": {
                     "@type": "WebPage",
