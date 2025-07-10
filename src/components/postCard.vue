@@ -57,7 +57,6 @@
     watch(
         () => props.post.id, 
         async () => {
-            console.log("watch post id",props.post.id);
             await getTagsByPost(props.post.id)
         }, 
         {immediate: true}

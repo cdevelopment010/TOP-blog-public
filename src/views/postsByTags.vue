@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, watch } from 'vue';
     import { useRoute } from 'vue-router';
     import { useHead } from '@unhead/vue';
     import PostCard from "../components/postCard.vue"
@@ -42,6 +42,10 @@
                 console.error(err); 
             })
     }
+
+    watch(() => route.params.tagId, async () => {
+        await getAllPublishedPosts();
+    })
 
     
     useHead({
