@@ -242,6 +242,7 @@
     }
 
     onMounted(async () => {
+        updateHead();
         await getPost(); 
 
         if (!notFound.value) 
