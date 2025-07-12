@@ -29,12 +29,12 @@
 
 import { ref, onMounted } from "vue"; 
 import { useHead } from '@unhead/vue';
-import { useRoute } from 'vue-router';
+// import { useRoute } from 'vue-router';
 import NavComponent from '../components/nav.vue';
 import loadingIndicator from "../components/loading.vue";
 
 
-const route = useRoute(); 
+// const route = useRoute(); 
 const tagList = ref(); 
 const loading = ref<boolean>(true);
 
