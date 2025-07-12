@@ -5,7 +5,7 @@
         </div>
 
         <div v-if="loading" class="container-body w-80ch">
-            <Loading />
+            <LoadingIndicator />
         </div>
 
         <div v-else class="container-body w-80ch">
@@ -32,7 +32,7 @@
     import { useRoute, useRouter } from 'vue-router';
     import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
-    import Loading from '../components/loading.vue';
+    import LoadingIndicator from '../components/loading.vue';
 
     const route = useRoute();
     const router = useRouter();

@@ -5,24 +5,29 @@
 
         </div>
         <div class="container-body d-grid-80-20">
-            <!-- posts -->
-            <section class="recent-posts">
-                <h1 class="mb-2">Posts</h1>
-                <template v-for="(post, index) in postList">
-                    <PostCard :post="post" :class="{'grid-full-row': index == 0 }"/>
-                </template>
-                <a href="/posts">See more posts...</a>
-                
-            </section>
-            <!-- sidebar -->
-            <aside>
-                <h3 class="m-0 mb-2">tags</h3>
-                <div class="d-flex flex-column gap-1">
-                    <template v-for="tag in tagList" :key="tag.id"> 
-                        <a :href="`/tags/${tag.id}`" class="link-none btn btn-secondary">{{ tag.name }} ({{ tag._count.PostTag }})</a>
+            <div v-if="loading" style="grid-column: 1 / 3">
+                <loadingIndicator />
+            </div>
+            <div v-else>
+                <!-- posts -->
+                <section class="recent-posts">
+                    <h1 class="mb-2">Posts</h1>
+                    <template v-for="(post, index) in postList">
+                        <PostCard :post="post" :class="{'grid-full-row': index == 0 }"/>
                     </template>
-                </div>
-            </aside>
+                    <a href="/posts">See more posts...</a>
+                    
+                </section>
+                <!-- sidebar -->
+                <aside>
+                    <h3 class="m-0 mb-2">tags</h3>
+                    <div class="d-flex flex-column gap-1">
+                        <template v-for="tag in tagList" :key="tag.id"> 
+                            <a :href="`/tags/${tag.id}`" class="link-none btn btn-secondary">{{ tag.name }} ({{ tag._count.PostTag }})</a>
+                        </template>
+                    </div>
+                </aside>
+            </div>
         </div>
     </div>  
 </template>
@@ -32,11 +37,14 @@
     import { useHead } from '@unhead/vue';
     import NavComponent from '../components/nav.vue'
     import PostCard from "../components/postCard.vue";
+    import loadingIndicator from "../components/loading.vue";
 
     const postList = ref(); 
     const tagList = ref(); 
+    const loading = ref<boolean>(true);
 
     async function getAllRecentPublishedPosts(numberOfPosts : number) {
+        loading.value = true;
         await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/recent/${numberOfPosts}`, {
                 mode: 'cors',
                 method: 'GET', 
@@ -49,14 +57,16 @@
                 } else { 
                     let data = await response.json(); 
                     postList.value = data.data; 
-                    console.log(postList.value);
                 }
             }).catch( err => {
                 console.error(err); 
+            }).finally(() => {
+                loading.value = false;
             })
     }
 
     async function getAllTags() { 
+        loading.value = true;
         await fetch("https://top-blog-api-proud-thunder-6960.fly.dev/tag/tagPostCount", {
             mode: 'cors',
                     method: 'GET', 
@@ -72,6 +82,8 @@
                     }
                 }).catch( err => {
                     console.error(err); 
+                }).finally(() => {
+                    loading.value = false;
                 })
     }
 

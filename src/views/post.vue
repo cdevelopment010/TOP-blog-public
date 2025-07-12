@@ -4,82 +4,91 @@
             <NavComponent />
         </div>
 
-        <div v-if="notFound">
-            <Error404 />
+        <div v-if="loading">
+            <LoadingIndicator />
+            <!-- <h6>Loading...</h6> -->
         </div>
 
-        
-        <div v-else class="container-body w-80ch">
-            <AuthorDetails :createdAt="post?.createdAt" class="mb-3"/>
+        <div v-else>
+            <div v-if="notFound">
+                <Error404 />
+            </div>
 
-            <template v-for="(el) in content" :key="el.id">
-                <h1 
-                    v-if="el.type === 'header1'" 
-                    v-html="el.content">
-                </h1>
-                <h2 
-                    v-if="el.type === 'header2'" 
-                    v-html="el.content">
-                </h2>
-                <h3
-                    v-if="el.type === 'header3'" 
-                    v-html="el.content">
-                </h3>
-                <h4 
-                    v-if="el.type === 'header4'" 
-                    v-html="el.content">
-                </h4>
-                <div
-                    v-else-if="el.type == 'tag'"
-                    id="tag-section"
-                > 
-                </div>
+            
+            <div v-else class="container-body w-80ch">
+                <AuthorDetails :createdAt="post?.createdAt" class="mb-3"/>
 
-
-                <p 
-                    v-else-if="el.type === 'paragraph'"
-                    v-html="el.content">
-                </p>
-
-                <ul
-                    v-else-if="el.type === 'list'"
-                >
-                    <template v-for="(child, _) in el.children" :key="'list-'+el.id+'-'+_">
-                        <li>{{ child }}</li>
-                    </template>
-
-                </ul>
-
-                <blockquote 
-                    v-else-if="el.type === 'quote'" 
-                    v-html="el.content"
-                    >
-                </blockquote>
-
-                <div v-else-if="el.type === 'code'">
-                    <pre>
-                    <code :class="`language-${el.language}`" v-html="el.content"></code>
-                    </pre>
-
-                </div>
-                <a 
-                    v-else-if="el.type === 'link'" 
-                    v-html="el.content"
-                    >
-                </a>
-
-                <div 
-                    v-else-if="el.type == 'image'"
-                    class="image-container spotlight"
-                    :data-src="extractImgSrc(el.content)"
-                    v-html="el.content"
+                <template v-for="(el) in content" :key="el.id">
+                    <h1 
+                        v-if="el.type === 'header1'" 
+                        v-html="el.content">
+                    </h1>
+                    <h2 
+                        v-if="el.type === 'header2'" 
+                        v-html="el.content">
+                    </h2>
+                    <h3
+                        v-if="el.type === 'header3'" 
+                        v-html="el.content">
+                    </h3>
+                    <h4 
+                        v-if="el.type === 'header4'" 
+                        v-html="el.content">
+                    </h4>
+                    <div
+                        v-else-if="el.type == 'tag'"
+                        id="tag-section"
                     > 
-                </div>
-            </template>
+                    </div>
 
-            <LikeShare :post-id="postId"/>
-            <Comments :post-id="postId" />
+
+                    <p 
+                        v-else-if="el.type === 'paragraph'"
+                        v-html="el.content">
+                    </p>
+
+                    <ul
+                        v-else-if="el.type === 'list'"
+                    >
+                        <template v-for="(child, _) in el.children" :key="'list-'+el.id+'-'+_">
+                            <li>{{ child }}</li>
+                        </template>
+
+                    </ul>
+
+                    <blockquote 
+                        v-else-if="el.type === 'quote'" 
+                        v-html="el.content"
+                        >
+                    </blockquote>
+
+                    <div v-else-if="el.type === 'code'">
+                        <pre>
+                        <code :class="`language-${el.language}`" v-html="el.content"></code>
+                        </pre>
+
+                    </div>
+                    <a 
+                        v-else-if="el.type === 'link'" 
+                        v-html="el.content"
+                        >
+                    </a>
+
+                    <div 
+                        v-else-if="el.type == 'image'"
+                        class="image-container spotlight"
+                        :data-src="extractImgSrc(el.content)"
+                        v-html="el.content"
+                        > 
+                    </div>
+                </template>
+
+                <LikeShare :post-id="postId"/>
+                <Comments :post-id="postId" />
+            </div>
+
         </div>
+        
     </div>
 
 </template>
@@ -93,6 +102,7 @@
     import LikeShare from '../components/LikeShare.vue';
     import AuthorDetails from '../components/authorDetails.vue';
     import Error404 from '../components/404Post.vue';
+    import LoadingIndicator from '../components/loading.vue';
     // @ts-ignore
     import Spotlight from 'spotlight.js/dist/js/spotlight.min.js'; 
     import 'spotlight.js/dist/css/spotlight.min.css';
@@ -142,6 +152,9 @@
                 }
             }).catch( err => {
                 console.error(err); 
+            }).finally(() => {
+                loading.value = false;
+                console.log("loading", loading.value);
             })
     }
 
@@ -164,6 +177,10 @@
                 }
             }).catch( err => {
                 console.error(err); 
+            }).finally(() => {
+
+                loading.value = false;
+                console.log("loading", loading.value);
             })
     }
 

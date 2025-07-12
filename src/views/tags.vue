@@ -5,17 +5,22 @@
         </div>
 
         <div class="container-body w-80ch">
-            <h2>Tags</h2>
-            <template v-for="tag in tagList">
-                <div class="mb-2 tag-item">
-                    <a :href="`/tags/${tag.id}`" class="link-none" >
-                        <div class="">
-                            <strong>{{ tag.name }}</strong>
-                        </div>
-                        <div>Post count: {{ tag._count.PostTag }}</div>
-                    </a>
-                </div>
-            </template>
+            <div v-if="loading">
+                <loadingIndicator />
+            </div>
+            <div v-else>
+                <h2>Tags</h2>
+                <template v-for="tag in tagList">
+                    <div class="mb-2 tag-item">
+                        <a :href="`/tags/${tag.id}`" class="link-none" >
+                            <div class="">
+                                <strong>{{ tag.name }}</strong>
+                            </div>
+                            <div>Post count: {{ tag._count.PostTag }}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
         </div>
     </div>
 </template>
@@ -26,11 +31,12 @@ import { ref, onMounted } from "vue";
 import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
 import NavComponent from '../components/nav.vue';
+import loadingIndicator from "../components/loading.vue";
 
 
 const route = useRoute(); 
 const tagList = ref(); 
-console.log(route.params.slug);
+const loading = ref<boolean>(true);
 
 async function getAllTags() { 
     await fetch("https://top-blog-api-proud-thunder-6960.fly.dev/tag/tagPostCount", {
@@ -48,6 +54,8 @@ async function getAllTags() {
                 }
             }).catch( err => {
                 console.error(err); 
+            }).finally(() => {
+                loading.value = false;
             })
 }
 

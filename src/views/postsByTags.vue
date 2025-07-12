@@ -5,10 +5,15 @@
         </div>
 
         <div class="container-body w-80ch">
-            <h2>Posts</h2>
-            <template v-for="post in postList">
-                <PostCard :post="post" />
-            </template>
+            <div v-if="loading">
+                <LoadingIndicator />
+            </div>
+            <div v-else>
+                <h2>Posts</h2>
+                <template v-for="post in postList">
+                    <PostCard :post="post" />
+                </template>
+            </div>
         </div>
     </div>
 </template>
@@ -19,11 +24,14 @@
     import { useHead } from '@unhead/vue';
     import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
+    import LoadingIndicator from '../components/loading.vue';
     
     const route = useRoute();
     const postList = ref();
+    const loading = ref<boolean>(true);
     async function getAllPublishedPosts() {
         if (!route.params.tagId) { return }
+        loading.value = true;
         await fetch(`https://top-blog-api-proud-thunder-6960.fly.dev/post/public/publishedPosts/tag/${route.params.tagId}`, {
                 mode: 'cors',
                 method: 'GET', 
@@ -40,6 +48,8 @@
                 }
             }).catch( err => {
                 console.error(err); 
+            }).finally(() => {
+                loading.value = false;
             })
     }
 
