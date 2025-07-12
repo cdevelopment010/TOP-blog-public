@@ -7,6 +7,7 @@ import about from "../views/about.vue";
 // import postBySlug from "../views/postBySlug.vue";
 import postsByTags from "../views/postsByTags.vue";
 import tags from "../views/tags.vue";
+import NotFound from "../views/NotFound.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL), 
     routes: [
@@ -17,6 +18,7 @@ const router = createRouter({
         {path: '/tags/:tagId', name: 'tags-posts', meta: {index: false}, component: postsByTags},
         {path: '/post/:slug', name: 'post', meta: {index: false}, component: post},
         {path: '/about', name: 'about', meta: {index: true}, component: about},
+        {path: '/404', name: 'NotFound', meta: {index: false, status: 404, name: 'robots', content: 'noindex'}, component: NotFound},
     ]
 }); 
 

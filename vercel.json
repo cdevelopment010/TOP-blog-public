@@ -1,10 +1,30 @@
 {
     "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/index.html"
-      }
-    ], 
+    {
+      "source": "/posts",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/tags",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/tags/:tagId",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/post/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ], 
     "redirects": [
       {
         "source": "/sitemap.xml", 

@@ -96,7 +96,7 @@
 <script setup lang="ts">
     import { ref, onMounted, nextTick } from 'vue';
     import { useHead } from '@unhead/vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import NavComponent from '../components/nav.vue';
     import Comments from '../components/comments.vue';
     import LikeShare from '../components/LikeShare.vue';
@@ -117,6 +117,7 @@
 
     const loading = ref<boolean>(true);
     const route = useRoute(); 
+    const router = useRouter();
     const post = ref(); 
     const postId = ref<number>(-1); 
     const content = ref<element[]>([]); 
@@ -140,6 +141,7 @@
                     // document.head.appendChild(meta);
                     updateHead();
                     console.log("ERROR:",response)
+                    router.replace('/404')
                     throw new Error(`Error ${response}`)
                 } else { 
                     let data = await response.json(); 
