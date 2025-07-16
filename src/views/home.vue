@@ -8,7 +8,7 @@
             <div v-if="loading" style="grid-column: 1 / 3">
                 <loadingIndicator />
             </div>
-            <div v-else>
+            <template v-else>
                 <!-- posts -->
                 <section class="recent-posts">
                     <h1 class="mb-2">Posts</h1>
@@ -27,7 +27,7 @@
                         </template>
                     </div>
                 </aside>
-            </div>
+            </template>
         </div>
     </div>  
 </template>
@@ -78,7 +78,7 @@
                         return new Error(`Error ${response}`)
                     } else { 
                         let data = await response.json(); 
-                        tagList.value = data.data.splice(0,2); 
+                        tagList.value = data.data.splice(0,5); 
                     }
                 }).catch( err => {
                     console.error(err); 
