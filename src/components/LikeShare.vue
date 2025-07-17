@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, computed, watch } from "vue"; 
+    import { ref, computed, watch, onMounted } from "vue"; 
     import Toasts from "./Toasts.vue";
     import { useToast } from "../utils/useToast";
 
@@ -96,5 +96,11 @@
             await getPostLikeCount();
         }
     });
+
+    onMounted(async () => {
+        if (props.postId) {
+            await getPostLikeCount()
+        }
+    })
 
 </script>
