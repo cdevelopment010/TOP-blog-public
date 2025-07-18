@@ -149,6 +149,13 @@ div:has(> img:only-child) {
 /* END OF Buttons */
 
 
+/* TEXT */
+.text-danger { color: red; }
+.text-warning { color: rgba(255, 217, 0)}
+
+.fw-bold {font-weight: bold;}
+
+/* END OF TEXT */
 
 
 
