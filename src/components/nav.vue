@@ -23,7 +23,8 @@
             <input type="text" placeholder="Search tags or titles" v-model="searchQuery" @keydown.enter="performSearch"/>
             <RouterLink to="/posts" class="btn">Posts</RouterLink>
             <RouterLink to="/tags" class="btn">Tags</RouterLink>
-            <RouterLink to="/about" class="btn btn-secondary">About</RouterLink>
+            <RouterLink to="/about" class="btn">About</RouterLink>
+            <RouterLink to="/feedback" class="btn" title="feedback form"><i class="fa-solid fa-comment-dots"></i> Feedback</RouterLink>
             <button class="btn-theme-toggle" @click="toggleDarkMode" style="font-size:1.3rem;">
                 <i class="fa-solid fa-moon" v-if="darkmode == 'dark'"></i>
                 <i class="fa-solid fa-sun" v-if="darkmode == 'light'"></i>
