@@ -9,7 +9,6 @@
 
 <script setup lang="ts">
 
-
 </script>
 <style scoped>
 .loading-indicator-2 { 
@@ -33,7 +32,7 @@ animation: bounce 850ms ease-in-out infinite forwards;
   height: 10px; 
   width: 10px; 
   border-radius: 50%; 
-  background: black;
+  background: var(--text-1);
   
 }
 
