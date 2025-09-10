@@ -81,6 +81,11 @@
                         v-html="el.content"
                         > 
                     </div>
+
+                    <div
+                      v-else-if="el.type === 'embedded'"
+                      v-html="el.content"  
+                    ></div>
                 </template>
 
                 <LikeShare :post-id="postId"/>
