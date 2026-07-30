@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted, nextTick } from 'vue';
+    import { ref, onMounted, nextTick, computed } from 'vue';
     import { useHead } from '@unhead/vue';
     import { useRoute } from 'vue-router';
     import NavComponent from '../components/nav.vue';
@@ -128,6 +128,84 @@
     const tags = ref<{id: number, name: string}[]>([])
     const notFound = ref<boolean | null>(null);
 
+    const canonicalUrl = computed(() =>
+        `https://www.coffeeshopcoding.dev/post/${route.params.slug}`
+    );
+
+    useHead(() => {
+            if (notFound.value) {
+                return {
+                    title: '404 - Post not found',
+                    meta: [
+                        {
+                            name: 'description',
+                            content: 'This post was deleted or never existed.'
+                        },
+                        {
+                            name: 'robots',
+                            content: 'noindex'
+                        }
+                    ]
+                };
+            }
+
+            return {
+                title: post.value?.title
+                    ? `${post.value.title} | Coffee Shop Coding`
+                    : 'Coffee Shop Coding',
+
+                meta: [
+                    {
+                        name: 'description',
+                        content:
+                            post.value?.description ||
+                            'Coding projects, development logs and reviews.'
+                    },
+                    {
+                        name: 'keywords',
+                        content:
+                            post.value?.keywords ||
+                            'blog, coding, web development'
+                    }
+                ],
+
+                link: [
+                    {
+                        rel: 'canonical',
+                        href: canonicalUrl.value
+                    }
+                ],
+
+                script: post.value
+                    ? [
+                        {
+                            type: 'application/ld+json',
+                            key: 'schema-org-blog-post',
+                            children: JSON.stringify({
+                                '@context': 'https://schema.org',
+                                '@type': 'BlogPosting',
+                                headline: post.value.title,
+                                author: {
+                                    '@type': 'Person',
+                                    name: 'Cdev010'
+                                },
+                                datePublished: post.value.publishedAt,
+                                dateModified:
+                                    post.value.updatedAt ||
+                                    post.value.publishedAt,
+                                description: post.value.description,
+                                mainEntityOfPage: {
+                                    '@type': 'WebPage',
+                                    '@id': canonicalUrl.value
+                                },
+                                url: canonicalUrl.value
+                            })
+                        }
+                    ]
+                    : []
+            };
+        });
+
 
     async function getPost() {
         loading.value = true;
@@ -139,11 +217,6 @@
                 if (!response.ok)
                 {  
                     notFound.value = true;
-                    // const meta = document.createElement("meta");
-                    // meta.name = "robots";
-                    // meta.content = "noindex";
-                    // document.head.appendChild(meta);
-                    updateHead();
                     console.log("ERROR:",response)
                     // router.replace('/404')
                     window.location.href = '/404.html'; //Hard redirect to trigger correct 404.html
@@ -155,7 +228,6 @@
                     console.log("post", post.value);
                     postId.value = data.data[0].id;
                     content.value = JSON.parse(post.value.content); 
-                    updateHead();
                 }
             }).catch( err => {
                 console.error(err); 
@@ -189,46 +261,6 @@
                 loading.value = false;
                 console.log("loading", loading.value);
             })
-    }
-
-    function updateHead() {
-
-        if (notFound.value) {
-            useHead({
-                title: '404 - post not found', 
-                meta: [
-                    { name: 'description', content: 'This post was deleted or never existed.' },
-                    { name: 'robots', content: 'noindex' }
-                    ]
-                })
-        } else {
-            useHead({
-                title: post.value?.title || 'Loading...',
-                meta: [
-                    { name: 'description', content: post.value?.description || 'Default blog description' },
-                    { name: 'keywords', content: post.value?.keywords || 'blog, coding, web development' }
-                ],
-                script: [
-                    {
-                        type: 'application/ld+json',
-                        key: 'schema-org-blog-post', // Ensures this script is unique
-                        children: JSON.stringify({
-                            "@context": "https://schema.org",
-                            "@type": "BlogPosting",
-                            "headline": post.value?.title || 'Default Title',
-                            "author": "Cdev010",
-                            "datePublished": post.value?.publishedAt || '2025-01-01',
-                            "dateModified": post.value?.updatedAt || '2025-01-01',
-                            "description": post.value?.description || 'A summary of the blog post.',
-                            "mainEntityOfPage": {
-                                "@type": "WebPage",
-                                "@id": `https://coffeeshopcoding.dev/post/${route.params.slug}`
-                            }
-                        })
-                    }
-                ]
-            });
-        }
     }
 
     function createTagsPill() {
@@ -266,7 +298,6 @@
     }
 
     onMounted(async () => {
-        updateHead();
         await getPost(); 
 
         if (!notFound.value) 
