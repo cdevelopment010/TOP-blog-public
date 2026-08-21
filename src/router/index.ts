@@ -9,6 +9,8 @@ import postsByTags from "../views/postsByTags.vue";
 import tags from "../views/tags.vue";
 import NotFound from "../views/NotFound.vue";
 import Feedback from "../views/feedback.vue";
+import Privacy from "../views/privacy.vue";
+import CookiePolicy from "../views/cookiePolicy.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL), 
@@ -22,6 +24,8 @@ const router = createRouter({
         {path: '/about', name: 'about', meta: {index: true}, component: about},
         {path: '/feedback', name:'feedback', meta: {index: false}, component: Feedback},
         {path: '/404', name: 'NotFound', meta: {index: false, status: 404, name: 'robots', content: 'noindex'}, component: NotFound},
+        {path: '/privacy', name: 'privacy', meta: {index: false}, component: Privacy},
+        {path: '/cookies', name: 'cookies', meta: {index: false}, component: CookiePolicy}
     ]
 }); 
 

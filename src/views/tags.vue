@@ -22,6 +22,7 @@
                 </template>
             </div>
         </div>
+        <Footer />
     </div>
 </template>
 
@@ -32,6 +33,8 @@ import { useHead } from '@unhead/vue';
 // import { useRoute } from 'vue-router';
 import NavComponent from '../components/nav.vue';
 import loadingIndicator from "../components/loading.vue";
+import Footer from './footer.vue';
+
 
 
 // const route = useRoute(); 

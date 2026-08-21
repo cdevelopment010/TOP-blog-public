@@ -29,6 +29,7 @@
                 </aside>
             </template>
         </div>
+        <Footer />
     </div>  
 </template>
 
@@ -38,6 +39,8 @@
     import NavComponent from '../components/nav.vue'
     import PostCard from "../components/postCard.vue";
     import loadingIndicator from "../components/loading.vue";
+    import Footer from './footer.vue';
+
 
     const postList = ref(); 
     const tagList = ref(); 

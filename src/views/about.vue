@@ -29,12 +29,14 @@
             </div>
 
         </div>
+        <Footer />
     </div>
 </template>
 
 <script setup lang="ts">
 import { useHead } from '@unhead/vue';
 import NavComponent from '../components/nav.vue';
+import Footer from './footer.vue';
 
 
 

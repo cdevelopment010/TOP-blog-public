@@ -15,6 +15,7 @@
                 </template>
             </div>
         </div>
+        <Footer />
     </div>
 </template>
 
@@ -25,6 +26,8 @@
     import PostCard from "../components/postCard.vue"
     import NavComponent from '../components/nav.vue';
     import LoadingIndicator from '../components/loading.vue';
+    import Footer from './footer.vue';
+
     
     const route = useRoute();
     const postList = ref();

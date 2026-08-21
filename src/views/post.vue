@@ -93,7 +93,7 @@
             </div>
 
         </div>
-        
+        <Footer />
     </div>
 
 </template>
@@ -108,6 +108,8 @@
     import AuthorDetails from '../components/authorDetails.vue';
     import Error404 from '../components/404Post.vue';
     import LoadingIndicator from '../components/loading.vue';
+    import Footer from './footer.vue';
+
     // @ts-ignore
     import Spotlight from 'spotlight.js/dist/js/spotlight.min.js'; 
     import 'spotlight.js/dist/css/spotlight.min.css';
