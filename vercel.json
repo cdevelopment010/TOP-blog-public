@@ -29,6 +29,10 @@
       "destination": "/index.html"
     }, 
     {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    },
+    {
         "source": "/sitemap.xml", 
         "destination": "https://top-blog-api-proud-thunder-6960.fly.dev/sitemap.xml"
       }
