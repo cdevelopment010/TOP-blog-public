@@ -10,12 +10,12 @@
             <article>
                 <header>
                 <h1>Privacy Policy</h1>
-                <p><strong>Last updated:</strong> 21 August 2026</p>
+                <p><strong>Last updated:</strong> 31 August 2026</p>
                 </header>
 
                 <section>
                 <p>
-                    Coffee Shop Coding respects your privacy and aims to be transparent
+                    Coffee Shop Coding and its subdomains respects your privacy and aims to be transparent
                     about how information is collected and used when you visit this website.
                 </p>
                 </section>
@@ -24,7 +24,7 @@
                 <h2>Information collected</h2>
 
                 <p>
-                    You can browse Coffee Shop Coding without creating an account or
+                    You can browse Coffee Shop Coding and its subdomains without creating an account or
                     providing personal information directly.
                 </p>
 
@@ -53,7 +53,7 @@
                 <h2>Cookies</h2>
 
                 <p>
-                    Coffee Shop Coding may use cookies and similar technologies.
+                    Coffee Shop Coding and its subdomains may use cookies and similar technologies.
                 </p>
 
                 <p>
@@ -82,7 +82,7 @@
                 <h2>Google AdSense</h2>
 
                 <p>
-                    Coffee Shop Coding uses, or may use, Google AdSense to display
+                    Coffee Shop Coding and its subdomains uses, or may use, Google AdSense to display
                     advertisements.
                 </p>
 
@@ -131,7 +131,7 @@
                 <h2>Google Analytics</h2>
 
                 <p>
-                    Coffee Shop Coding may use Google Analytics to understand how visitors
+                    Coffee Shop Coding and its subdomains may use Google Analytics to understand how visitors
                     use the website.
                 </p>
 
@@ -175,7 +175,7 @@
                 <section>
                 <h2>How information is used</h2>
 
-                <p>Information collected through Coffee Shop Coding may be used to:</p>
+                <p>Information collected through Coffee Shop Coding and its subdomains may be used to:</p>
 
                 <ul>
                     <li>Operate and maintain the website</li>
@@ -191,7 +191,7 @@
                 <h2>Sharing information</h2>
 
                 <p>
-                    Personal information is not sold by Coffee Shop Coding.
+                    Personal information is not sold by Coffee Shop Coding or its subdomains.
                 </p>
 
                 <p>
@@ -267,12 +267,12 @@
                 <h2>External links</h2>
 
                 <p>
-                    Articles on Coffee Shop Coding may contain links to third-party
+                    Articles on Coffee Shop Coding and its subdomains may contain links to third-party
                     websites.
                 </p>
 
                 <p>
-                    Coffee Shop Coding is not responsible for the privacy practices or
+                    Coffee Shop Coding and its subdomains is not responsible for the privacy practices or
                     content of external websites. You should review the privacy policies of
                     those websites separately.
                 </p>
@@ -297,7 +297,7 @@
 
                 <p>
                     If you have any questions about this privacy policy or how information
-                    is handled by Coffee Shop Coding, please use the contact details
+                    is handled by Coffee Shop Coding and its subdomains, please use the contact details
                     provided on this website.
                 </p>
                 </section>
@@ -308,7 +308,7 @@
                 <h1>Cookie Policy</h1>
 
                 <p>
-                    This cookie policy explains how Coffee Shop Coding uses cookies and
+                    This cookie policy explains how Coffee Shop Coding and its subdomains uses cookies and
                     similar technologies.
                 </p>
 
@@ -336,7 +336,7 @@
 
                 <p>
                     With your consent, analytics technologies may be used to understand how
-                    visitors interact with Coffee Shop Coding.
+                    visitors interact with Coffee Shop Coding and its subdomains.
                 </p>
 
                 <p>
@@ -347,7 +347,7 @@
                 <h2>Advertising cookies</h2>
 
                 <p>
-                    Coffee Shop Coding uses, or may use, Google AdSense to display
+                    Coffee Shop Coding and its subdomains uses, or may use, Google AdSense to display
                     advertisements.
                 </p>
 
@@ -360,7 +360,7 @@
                 <h2>Your cookie choices</h2>
 
                 <p>
-                    When you visit Coffee Shop Coding, you may be presented with Google's
+                    When you visit Coffee Shop Coding and its subdomains, you may be presented with Google's
                     consent management message allowing you to manage your privacy choices.
                 </p>
 
