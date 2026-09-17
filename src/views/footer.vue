@@ -4,6 +4,7 @@
         <nav aria-label="Footer navigation">
             <RouterLink to="/privacy">Privacy Policy</RouterLink>
             <RouterLink to="/cookies">Cookie Policy</RouterLink>
+            <a href="https://buymeacoffee.com/cdevelopment010" target="_blank">Buy me a coffee</a>
         </nav>
     </footer>
 </template>
